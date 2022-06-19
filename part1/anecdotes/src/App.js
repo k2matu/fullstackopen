@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { random, round } from 'mathjs' 
+import { random, round, max } from 'mathjs' 
 
 const App = () => {
   const anecdotes = [
@@ -11,24 +11,31 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ]
-   
+  
   const [selected, setSelected] = useState(0)
-  const [points, setPoints] = useState([])
+  const [points, setPoints] = useState([0, 0, 0, 0, 0, 0, 0])
   
-  const handleVote = () => setPoints(points.concat(selected))
+  const handleVote = () => {
+    const copy = [...points]
+    copy[selected] += 1
+    return setPoints(copy)
+    }
   
-  points.sort();
-  console.log(points)
+  const maximum = max(points)
+  let position = points.indexOf(maximum)
   
   return (
-    <div>
+    <>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
-      <p>has {points} votes</p>
+      <p>has {points[selected]} votes</p>
       <button onClick={handleVote}>vote</button>
       <button onClick={() => setSelected(round(random(6)))}>next ancedote</button>
-    </div>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[position]}</p>
+      <p>has {maximum} votes</p> 
+    </>
   )
 }
-
 
 export default App
