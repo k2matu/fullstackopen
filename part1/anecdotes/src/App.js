@@ -24,6 +24,7 @@ const App = () => {
   const maximum = max(points)
   let position = points.indexOf(maximum)
   
+  
   return (
     <>
       <h1>Anecdote of the day</h1>
