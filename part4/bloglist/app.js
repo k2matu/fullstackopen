@@ -22,11 +22,12 @@ mongoose
 		console.log("error connecting to MongoDB:", error.message);
 	});
 
-app.use(middleware.tokenExtractor);
 app.use(cors());
 // app.use(express.static("build"));
 app.use(express.json());
 app.use(morgan("tiny"));
+
+app.use(middleware.tokenExtractor);
 
 app.use("/api/login", loginRouter);
 app.use("/api/users", usersRouter);
