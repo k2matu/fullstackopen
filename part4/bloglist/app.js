@@ -9,6 +9,7 @@ const blogRouter = require("./controllers/bloglists");
 const morgan = require("morgan");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
+const middleware = require("./utils/middleware");
 
 logger.info("connecting to", config.MONGODB_URI);
 
@@ -21,6 +22,7 @@ mongoose
 		console.log("error connecting to MongoDB:", error.message);
 	});
 
+app.use(middleware.tokenExtractor);
 app.use(cors());
 // app.use(express.static("build"));
 app.use(express.json());
