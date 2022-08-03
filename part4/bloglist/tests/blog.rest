@@ -1,9 +1,9 @@
 POST http://localhost:3003/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndobyIsImlkIjoiNjJlNmMzZDcwZGYzOWQ0NjUwYWI0MDMwIiwiaWF0IjoxNjU5MjkwNjA2fQ.qscZIQ0cuuLDxVMObFWuhp8auL0isObYS3DCodrf8hU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndobyIsImlkIjoiNjJlYWIwYTE4YmE1NDhmYzIwY2M1NGRhIiwiaWF0IjoxNjU5NTQ3ODIxfQ.JIVNwlvZrHuuj7zDlD1_gjqxYoizAsWBsSDKEHvrOdQ
 
 {
-	"title": "checking",
+	"title": "second check",
 	"url": "dasda",
 	"likes": 3
 }
@@ -45,5 +45,5 @@ content-type: application/json
 ###
 GET http://localhost:3003/
 ###
-DELETE http://localhost:3003/api/blogs/62e839a65ac42934c65e214b
-Authorization: bearer sdsd
+DELETE http://localhost:3003/api/blogs/62eabc106241c53d1cd9fa9e
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndobyIsImlkIjoiNjJlYWIwYTE4YmE1NDhmYzIwY2M1NGRhIiwiaWF0IjoxNjU5NTQ3ODIxfQ.JIVNwlvZrHuuj7zDlD1_gjqxYoizAsWBsSDKEHvrOdQ

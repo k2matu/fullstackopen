@@ -51,16 +51,20 @@ test("unique identifier property of the blog posts is named id", async () => {
 	expect(initialBlogs[0]._id).toBeDefined(initialBlogs[0].id);
 });
 
-test("a valid blog can be added", async () => {
+test("blog add", async () => {
 	const newBlog = {
-		title: "Canonical string reduction",
-		author: "Edsger W. Dijkstra",
-		url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+		title: "Checking if it works",
+		author: "Edsdsadasa",
+		url: "hsomething",
 		likes: 12,
 	};
 
 	await api
 		.post("/api/blogs")
+		.set(
+			"Authorization",
+			"bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndobyIsImlkIjoiNjJlYWIwYTE4YmE1NDhmYzIwY2M1NGRhIiwiaWF0IjoxNjU5NTQ3ODIxfQ.JIVNwlvZrHuuj7zDlD1_gjqxYoizAsWBsSDKEHvrOdQ"
+		)
 		.send(newBlog)
 		.expect(201)
 		.expect("Content-Type", /application\/json/);
@@ -69,7 +73,7 @@ test("a valid blog can be added", async () => {
 	const titles = response.body.map((r) => r.title);
 
 	expect(response.body).toHaveLength(initialBlogs.length + 1);
-	expect(titles).toContain("Canonical string reduction");
+	expect(titles).toContain("Checking if it works");
 }, 100000);
 
 test("if likes missing default value 0", async () => {
