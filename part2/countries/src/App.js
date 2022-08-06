@@ -12,17 +12,25 @@ const App = () => {
 		});
 	}, []);
 
-	const country = countries.filter((country) =>
+	let country = countries.filter((country) =>
 		country.name.common.toLowerCase().includes(newFilter.toLowerCase())
 	);
+
+	const handleOnChange = (event) => {
+		setNewFilter(event.target.value);
+	};
 
 	return (
 		<div>
 			<p>
 				find countries
-				<input onChange={(e) => setNewFilter(e.target.value)} />
+				<input onChange={handleOnChange} />
 			</p>
-			<ShowCountry country={country} setNewFilter={setNewFilter} />
+			<ShowCountry
+				country={country}
+				setNewFilter={setNewFilter}
+				newFilter={newFilter}
+			/>
 		</div>
 	);
 };
