@@ -3,15 +3,20 @@ import DetailsOfCountry from "./DetailsOfCountry";
 
 const ShowCountry = ({ country }) => {
 	const [oneCountry, setOneCountry] = useState(null);
+	const [clicked, setClick] = useState(true);
 
-	const toggleActive = (e) => {
-		const toggledCountry = country.find(
-			(country) => country.name.common === e.target.value
-		);
-		setOneCountry(toggledCountry);
-	};
-
-	console.log(oneCountry);
+	function toggleButton(e) {
+		if (clicked) {
+			const toggledCountry = country.find(
+				(country) => country.name.common === e.target.value
+			);
+			setOneCountry(toggledCountry);
+			setClick(false);
+		} else {
+			setOneCountry(null);
+			setClick(true);
+		}
+	}
 
 	const infoCountry = () => {
 		return <DetailsOfCountry country={oneCountry} />;
@@ -21,8 +26,7 @@ const ShowCountry = ({ country }) => {
 		country.map((country) => (
 			<div key={country.cca2}>
 				{country.name.common}
-				{(country.active = false)}
-				<button value={country.name.common} onClick={toggleActive}>
+				<button value={country.name.common} onClick={toggleButton}>
 					show
 				</button>
 			</div>
@@ -30,15 +34,14 @@ const ShowCountry = ({ country }) => {
 
 	if (country.length === 1) {
 		return <DetailsOfCountry country={country[0]} />;
-	} else {
-		return (
-			<div>
-				{country.length > 10 && "Too many matches, specify another filter"}
-				{country.length < 11 && manyCountries()}
-				{oneCountry && infoCountry()}
-			</div>
-		);
 	}
+	return (
+		<div>
+			{country.length > 10 && "Too many matches, specify another filter"}
+			{country.length < 11 && manyCountries()}
+			{oneCountry && infoCountry()}
+		</div>
+	);
 };
 
 export default ShowCountry;
