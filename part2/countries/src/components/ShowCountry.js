@@ -47,7 +47,7 @@ const ShowCountry = ({ country }) => {
 			<div key={index}>
 				{country.name.common}
 				<button value={country.name.common} onClick={toggleButton}>
-					{clicked ? "show" : "hide"}
+					show
 				</button>
 			</div>
 		));
