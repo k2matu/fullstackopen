@@ -13,7 +13,6 @@ const ShowCountry = ({ country }) => {
 		const check = oneCountry.find(
 			(country) => toggledCountry.name.common === country.name.common
 		);
-		console.log(check);
 
 		const removeCountry = () => {
 			setOneCountry((oneCountry) =>
