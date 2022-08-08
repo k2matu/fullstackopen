@@ -26,11 +26,7 @@ const App = () => {
 				find countries
 				<input onChange={handleOnChange} />
 			</p>
-			<ShowCountry
-				country={country}
-				setNewFilter={setNewFilter}
-				newFilter={newFilter}
-			/>
+			<ShowCountry country={country} setNewFilter={setNewFilter} />
 		</div>
 	);
 };

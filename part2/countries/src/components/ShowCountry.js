@@ -5,9 +5,13 @@ const ShowCountry = ({ country }) => {
 	const [oneCountry, setOneCountry] = useState([]);
 	const [clicked, setClicked] = useState(true);
 
-	function toggleButton(e) {
+	const toggleButton = (e) => {
 		const toggledCountry = country.find(
 			(country) => country.name.common === e.target.value
+		);
+
+		const check = oneCountry.find(
+			(country) => toggledCountry.name.common === country.name.common
 		);
 
 		const removeCountry = () => {
@@ -18,16 +22,14 @@ const ShowCountry = ({ country }) => {
 			);
 		};
 
-		if (clicked) {
+		if (clicked && !check) {
 			setClicked(false);
 			setOneCountry([...oneCountry, toggledCountry]);
 		} else {
 			setClicked(true);
 			removeCountry();
 		}
-	}
-
-	console.log(oneCountry);
+	};
 
 	const infoCountry = () =>
 		oneCountry.map((country) => (
