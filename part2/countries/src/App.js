@@ -12,7 +12,7 @@ const App = () => {
 		});
 	}, []);
 
-	let country = countries.filter((country) =>
+	const country = countries.filter((country) =>
 		country.name.common.toLowerCase().includes(newFilter.toLowerCase())
 	);
 

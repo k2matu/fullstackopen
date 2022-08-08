@@ -13,6 +13,7 @@ const ShowCountry = ({ country }) => {
 		const check = oneCountry.find(
 			(country) => toggledCountry.name.common === country.name.common
 		);
+		console.log(check);
 
 		const removeCountry = () => {
 			setOneCountry((oneCountry) =>
@@ -25,6 +26,9 @@ const ShowCountry = ({ country }) => {
 		if (clicked && !check) {
 			setClicked(false);
 			setOneCountry([...oneCountry, toggledCountry]);
+			if (!check) {
+				setClicked(true);
+			}
 		} else {
 			setClicked(true);
 			removeCountry();
@@ -43,7 +47,7 @@ const ShowCountry = ({ country }) => {
 			<div key={index}>
 				{country.name.common}
 				<button value={country.name.common} onClick={toggleButton}>
-					show
+					{clicked ? "show" : "hide"}
 				</button>
 			</div>
 		));
