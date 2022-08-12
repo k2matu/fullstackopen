@@ -1,72 +1,55 @@
 import { useState, useEffect } from "react";
-import Blog from "./components/Blog";
+import LoginForm from "./components/LoginForm";
+import Logout from "./components/Logout";
 import blogService from "./services/blogs";
-import loginService from "./services/login";
+
+const Success = ({ successMessage }) => {
+	if (successMessage) {
+		return <div className="success">{successMessage}</div>;
+	}
+};
+
+const Fail = ({ failMessage }) => {
+	if (failMessage) {
+		return <div className="fail">{failMessage}</div>;
+	}
+};
 
 const App = () => {
 	const [blogs, setBlogs] = useState([]);
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
 	const [user, setUser] = useState(null);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [successMessage, setSuccessMessage] = useState(null);
 
 	useEffect(() => {
 		blogService.getAll().then((blogs) => setBlogs(blogs));
 	}, []);
 
-	const handleLogin = async (event) => {
-		event.preventDefault();
-
-		try {
-			const user = await loginService.login({ username, password });
+	useEffect(() => {
+		const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
+		if (loggedUserJSON) {
+			const user = JSON.parse(loggedUserJSON);
 			setUser(user);
-			setUsername("");
-			setPassword("");
-		} catch (exception) {
-			setErrorMessage("Wrong credentials");
-			console.log(errorMessage);
-			setTimeout(() => {
-				setErrorMessage(null);
-			}, 5000);
+			blogService.setToken(user.token);
 		}
-	};
+	}, []);
 
 	if (user === null) {
-		return (
-			<div>
-				<h2>log in to appliciation</h2>
-				<form onSubmit={handleLogin}>
-					<div>
-						username:
-						<input
-							type="text"
-							value={username}
-							name="Username"
-							onChange={({ target }) => setUsername(target.value)}
-						/>
-					</div>
-					<div>
-						password:
-						<input
-							type="password"
-							value={password}
-							name="Password"
-							onChange={({ target }) => setPassword(target.value)}
-						/>
-					</div>
-					<button type="submit">login</button>
-				</form>
-			</div>
-		);
+		return <LoginForm setUser={setUser} setErrorMessage={setErrorMessage} />;
 	}
 
 	return (
 		<div>
-			<h2>blogs</h2>
-			<p>{user.name} logged in</p>
-			{blogs.map((blog) => (
-				<Blog key={blog.id} blog={blog} />
-			))}
+			<Success successMessage={successMessage} />
+			<Fail failMessage={errorMessage} />
+			<Logout
+				blogs={blogs}
+				setBlogs={setBlogs}
+				user={user}
+				setUser={setUser}
+				setErrorMessage={setErrorMessage}
+				setSuccessMessage={setSuccessMessage}
+			/>
 		</div>
 	);
 };
