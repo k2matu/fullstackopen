@@ -1,16 +1,13 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
 
-const CreateBlog = ({
-	blogs,
-	setBlogs,
-	setErrorMessage,
-	setSuccessMessage,
-}) => {
+const CreateBlog = ({ setBlogs, setErrorMessage, setSuccessMessage }) => {
+	const [visible, setVisible] = useState(false);
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
 	const [url, setUrl] = useState("");
-	const [visible, setVisible] = useState(false);
+	// eslint-disable-next-line
+	const [likes, setLikes] = useState(0);
 
 	const hideWhenVisible = { display: visible ? "none" : "" };
 	const showWhenVisible = { display: visible ? "" : "none" };
@@ -19,7 +16,7 @@ const CreateBlog = ({
 		event.preventDefault();
 
 		try {
-			const blog = await blogService.create({ title, author, url });
+			const blog = await blogService.create({ title, author, url, likes });
 			setBlogs((blogs) => [...blogs, blog]);
 			setTitle("");
 			setAuthor("");
@@ -31,7 +28,7 @@ const CreateBlog = ({
 				setSuccessMessage(null);
 			}, 5000);
 		} catch (exception) {
-			setErrorMessage(`blog has not been added successfully`);
+			setErrorMessage("blog has not been added successfully");
 			setTimeout(() => {
 				setErrorMessage(null);
 			}, 5000);

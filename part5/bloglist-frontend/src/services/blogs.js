@@ -21,5 +21,21 @@ const create = async (newObject) => {
 	return response.data;
 };
 
+const update = (id, changedObject) => {
+	const config = {
+		headers: { Authorization: token },
+	};
+	const request = axios.put(`${baseUrl}/${id}`, changedObject, config);
+	return request.then((response) => response.data);
+};
+
+const remove = (id) => {
+	const config = {
+		headers: { Authorization: token },
+	};
+	const response = axios.delete(`${baseUrl}/${id}`, config);
+	return response.status;
+};
+
 // eslint-disable-next-line
-export default { getAll, create, setToken };
+export default { getAll, create, update, remove, setToken };

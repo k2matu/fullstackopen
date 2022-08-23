@@ -1,19 +1,8 @@
 import { useState, useEffect } from "react";
 import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
+import { Success, Fail } from "./components/Message";
 import blogService from "./services/blogs";
-
-const Success = ({ successMessage }) => {
-	if (successMessage) {
-		return <div className="success">{successMessage}</div>;
-	}
-};
-
-const Fail = ({ failMessage }) => {
-	if (failMessage) {
-		return <div className="fail">{failMessage}</div>;
-	}
-};
 
 const App = () => {
 	const [blogs, setBlogs] = useState([]);

@@ -28,9 +28,17 @@ const Logout = ({
 					setBlogs={setBlogs}
 				/>
 			</div>
-			{blogs.map((blog) => (
-				<Blog key={blog.id} blog={blog} />
-			))}
+			{blogs
+				.sort((a, b) => a.likes - b.likes)
+				.map((blog) => (
+					<Blog
+						key={blog.id}
+						blogs={blogs}
+						setBlogs={setBlogs}
+						blog={blog}
+						user={user}
+					/>
+				))}
 		</div>
 	);
 };
