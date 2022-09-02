@@ -26,11 +26,12 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
 			title: blog.title,
 			url: blog.url,
 		};
-
-		blogService.update(blog.id, changedLikes).then((returnedBlog) => {
+		blogService.update(blog.id, changedLikes).then((response) => {
 			setBlogs(
 				blogs.map((elem) =>
-					elem.title !== changedLikes.title ? elem : returnedBlog
+					elem.title !== changedLikes.title
+						? elem
+						: { ...elem, likes: response.likes }
 				)
 			);
 		});
@@ -45,14 +46,16 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
 
 	return (
 		<div style={blogStyle}>
-			{blog.title} {blog.author}{" "}
-			<button onClick={toggleVisibility}>view</button>
+			<div>
+				{blog.title} {blog.author}{" "}
+				<button onClick={toggleVisibility}>view</button>
+			</div>
 			<Togglable visible={visible}>
 				<p>{blog.url}</p>
 				<p>
 					likes: {blog.likes} <button onClick={updateLikes}>like</button>
 				</p>
-				<p>{blog.user.name}</p>
+				<p>user: {blog.user.name}</p>
 				<div style={showDelete}>
 					<button onClick={deleteBlog}>remove</button>
 				</div>

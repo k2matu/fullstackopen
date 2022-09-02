@@ -1,7 +1,12 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
 
-const CreateBlog = ({ setBlogs, setErrorMessage, setSuccessMessage }) => {
+const CreateBlog = ({
+	setBlogs,
+	setErrorMessage,
+	setSuccessMessage,
+	blogs,
+}) => {
 	const [visible, setVisible] = useState(false);
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
@@ -17,7 +22,7 @@ const CreateBlog = ({ setBlogs, setErrorMessage, setSuccessMessage }) => {
 
 		try {
 			const blog = await blogService.create({ title, author, url, likes });
-			setBlogs((blogs) => [...blogs, blog]);
+			setBlogs(blogs.concat(blog));
 			setTitle("");
 			setAuthor("");
 			setUrl("");
