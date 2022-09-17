@@ -1,8 +1,5 @@
 const router = require("express").Router();
-const jwt = require("jsonwebtoken");
-
 const Blog = require("../models/blog");
-const User = require("../models/user");
 
 router.get("/", async (request, response) => {
 	const blogs = await Blog.find({})
@@ -47,8 +44,7 @@ router.delete("/:id", async (request, response) => {
 });
 
 router.put("/:id", async (request, response) => {
-	const blog = request.body;
-
+	const blog = { ...request.body };
 	const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {
 		new: true,
 		runValidators: true,

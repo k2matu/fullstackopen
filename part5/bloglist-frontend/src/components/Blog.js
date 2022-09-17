@@ -1,6 +1,6 @@
-import { useState } from "react";
 import Togglable from "./Togglable";
 import blogService from "../services/blogs";
+import BlogInfo from "./BlogInfo";
 
 const Blog = ({ blog, blogs, setBlogs, user }) => {
 	const blogStyle = {
@@ -9,11 +9,6 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
 		border: "solid",
 		borderWidth: 1,
 		marginBottom: 5,
-	};
-	const [visible, setVisible] = useState(false);
-
-	const toggleVisibility = () => {
-		setVisible(!visible);
 	};
 
 	const showDelete = { display: blog.user.name === user.name ? "" : "none" };
@@ -47,18 +42,15 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
 	return (
 		<div style={blogStyle}>
 			<div>
-				{blog.title} {blog.author}{" "}
-				<button onClick={toggleVisibility}>view</button>
+				{blog.title} {blog.author}
 			</div>
-			<Togglable visible={visible}>
-				<p>{blog.url}</p>
-				<p>
-					likes: {blog.likes} <button onClick={updateLikes}>like</button>
-				</p>
-				<p>user: {blog.user.name}</p>
-				<div style={showDelete}>
-					<button onClick={deleteBlog}>remove</button>
-				</div>
+			<Togglable buttonLabel="view" buttonLabel2="hide">
+				<BlogInfo
+					blog={blog}
+					updateLikes={updateLikes}
+					showDelete={showDelete}
+					deleteBlog={deleteBlog}
+				/>
 			</Togglable>
 		</div>
 	);

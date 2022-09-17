@@ -1,34 +1,21 @@
 import { useState } from "react";
-import blogService from "../services/blogs";
 
-const CreateBlog = ({
-	setBlogs,
-	setErrorMessage,
-	setSuccessMessage,
-	blogs,
-}) => {
-	const [visible, setVisible] = useState(false);
+const CreateBlog = ({ setErrorMessage, setSuccessMessage, createBlog }) => {
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
 	const [url, setUrl] = useState("");
 	// eslint-disable-next-line
 	const [likes, setLikes] = useState(0);
 
-	const hideWhenVisible = { display: visible ? "none" : "" };
-	const showWhenVisible = { display: visible ? "" : "none" };
-
-	const addBlog = async (event) => {
+	const addBlog = (event) => {
 		event.preventDefault();
 
 		try {
-			const blog = await blogService.create({ title, author, url, likes });
-			setBlogs(blogs.concat(blog));
+			createBlog({ title, author, url, likes });
 			setTitle("");
 			setAuthor("");
 			setUrl("");
-			setSuccessMessage(
-				`${blog.title} by ${blog.author} has been added successfully`
-			);
+			setSuccessMessage(`${title} by ${author} has been added successfully`);
 			setTimeout(() => {
 				setSuccessMessage(null);
 			}, 5000);
@@ -42,43 +29,41 @@ const CreateBlog = ({
 
 	return (
 		<div>
-			<div style={hideWhenVisible}>
-				<button onClick={() => setVisible(true)}>show</button>
-			</div>
-			<div style={showWhenVisible}>
-				<h2>create new</h2>
-				<form onSubmit={addBlog}>
-					<div>
-						title:{""}
-						<input
-							type="text"
-							value={title}
-							name="Title"
-							onChange={({ target }) => setTitle(target.value)}
-						/>
-					</div>
-					<div>
-						author:{""}
-						<input
-							type="text"
-							value={author}
-							name="Author"
-							onChange={({ target }) => setAuthor(target.value)}
-						/>
-					</div>
-					<div>
-						url:{""}
-						<input
-							type="text"
-							value={url}
-							name="Url"
-							onChange={({ target }) => setUrl(target.value)}
-						/>
-					</div>
-					<button type="submit">create</button>
-				</form>
-				<button onClick={() => setVisible(false)}>hide</button>
-			</div>
+			<h2>create new</h2>
+			<form onSubmit={addBlog}>
+				<div>
+					title:{""}
+					<input
+						type="text"
+						value={title}
+						name="Title"
+						placeholder="write title here"
+						id="title"
+						onChange={({ target }) => setTitle(target.value)}
+					/>
+				</div>
+				<div>
+					author:{""}
+					<input
+						type="text"
+						value={author}
+						name="Author"
+						placeholder="write author here"
+						onChange={({ target }) => setAuthor(target.value)}
+					/>
+				</div>
+				<div>
+					url:{""}
+					<input
+						type="text"
+						value={url}
+						name="Url"
+						placeholder="write url here"
+						onChange={({ target }) => setUrl(target.value)}
+					/>
+				</div>
+				<button type="submit">create</button>
+			</form>
 		</div>
 	);
 };

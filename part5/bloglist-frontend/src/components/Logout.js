@@ -1,5 +1,8 @@
 import Blog from "./Blog";
 import CreateBlog from "./CreateBlog";
+import blogService from "../services/blogs";
+import { useRef } from "react";
+import Togglable from "./Togglable";
 
 const Logout = ({
 	setUser,
@@ -14,6 +17,15 @@ const Logout = ({
 		window.localStorage.removeItem("loggedBlogAppUser");
 	};
 
+	const addBlog = (blogObject) => {
+		blogFormRef.current.toggleVisibility();
+		blogService.create(blogObject).then((returnedBlog) => {
+			setBlogs(blogs.concat(returnedBlog));
+		});
+	};
+
+	const blogFormRef = useRef();
+
 	return (
 		<div>
 			<h2>blogs</h2>
@@ -21,12 +33,17 @@ const Logout = ({
 				{user.name} logged in <button onClick={handleLogout}>logout</button>
 			</p>
 			<div>
-				<CreateBlog
-					setSuccessMessage={setSuccessMessage}
-					setErrorMessage={setErrorMessage}
-					blogs={blogs}
-					setBlogs={setBlogs}
-				/>
+				<Togglable
+					buttonLabel="new blog"
+					buttonLabel2="cancel"
+					ref={blogFormRef}
+				>
+					<CreateBlog
+						createBlog={addBlog}
+						setErrorMessage={setErrorMessage}
+						setSuccessMessage={setSuccessMessage}
+					/>
+				</Togglable>
 			</div>
 			{blogs
 				.sort((a, b) => a.likes - b.likes)
