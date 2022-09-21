@@ -1,12 +1,4 @@
-POST http://localhost:3003/api/blogs HTTP/1.1
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndobyIsImlkIjoiNjJlYWIwYTE4YmE1NDhmYzIwY2M1NGRhIiwiaWF0IjoxNjU5NTQ3ODIxfQ.JIVNwlvZrHuuj7zDlD1_gjqxYoizAsWBsSDKEHvrOdQ
-
-{
-	"title": "second check",
-	"url": "dasda",
-	"likes": 3
-}
+POST http://localhost:3003/api/testing/reset
 ###
 POST  http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
