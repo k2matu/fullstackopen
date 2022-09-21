@@ -1,10 +1,12 @@
 const BlogInfo = ({ blog, updateLikes, showDelete, deleteBlog }) => {
 	return (
 		<div>
-			{" "}
 			<p>{blog.url}</p>
 			<p>
-				likes: {blog.likes} <button onClick={updateLikes}>like</button>
+				likes: {blog.likes}{" "}
+				<button id="like" onClick={updateLikes}>
+					like
+				</button>
 			</p>
 			<p>user: {blog.user.name}</p>
 			<div style={showDelete}>

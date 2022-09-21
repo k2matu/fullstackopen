@@ -34,17 +34,18 @@ const CreateBlog = ({ setErrorMessage, setSuccessMessage, createBlog }) => {
 				<div>
 					title:{""}
 					<input
+						id="title"
 						type="text"
 						value={title}
 						name="Title"
 						placeholder="write title here"
-						id="title"
 						onChange={({ target }) => setTitle(target.value)}
 					/>
 				</div>
 				<div>
 					author:{""}
 					<input
+						id="author"
 						type="text"
 						value={author}
 						name="Author"
@@ -55,6 +56,7 @@ const CreateBlog = ({ setErrorMessage, setSuccessMessage, createBlog }) => {
 				<div>
 					url:{""}
 					<input
+						id="url"
 						type="text"
 						value={url}
 						name="Url"
@@ -62,7 +64,9 @@ const CreateBlog = ({ setErrorMessage, setSuccessMessage, createBlog }) => {
 						onChange={({ target }) => setUrl(target.value)}
 					/>
 				</div>
-				<button type="submit">create</button>
+				<button id="create" type="submit">
+					create
+				</button>
 			</form>
 		</div>
 	);

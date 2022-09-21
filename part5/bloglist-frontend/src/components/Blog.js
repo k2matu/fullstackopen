@@ -2,7 +2,7 @@ import Togglable from "./Togglable";
 import blogService from "../services/blogs";
 import BlogInfo from "./BlogInfo";
 
-const Blog = ({ blog, blogs, setBlogs, user }) => {
+const Blog = ({ blog, blogs, setBlogs, user, setSuccessMessage }) => {
 	const blogStyle = {
 		paddingTop: 10,
 		paddingLeft: 2,
@@ -35,12 +35,18 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
 	const deleteBlog = async () => {
 		if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
 			await blogService.remove(blog.id);
+			setSuccessMessage(
+				`${blog.title} by ${blog.author} has been removed successfully`
+			);
+			setTimeout(() => {
+				setSuccessMessage(null);
+			}, 5000);
 			setBlogs(blogs.filter((elem) => elem.id !== blog.id));
 		}
 	};
 
 	return (
-		<div style={blogStyle}>
+		<div style={blogStyle} className="blog">
 			<div>
 				{blog.title} {blog.author}
 			</div>

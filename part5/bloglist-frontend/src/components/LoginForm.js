@@ -1,8 +1,9 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
 import loginService from "../services/login";
+import { Fail } from "./Message";
 
-const Login = ({ setUser, setErrorMessage }) => {
+const Login = ({ setUser, setErrorMessage, errorMessage }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -26,11 +27,13 @@ const Login = ({ setUser, setErrorMessage }) => {
 
 	return (
 		<div>
-			<h2>log in to appliciation</h2>
+			<Fail errorMessage={errorMessage} />
+			<h2>log in to application</h2>
 			<form onSubmit={handleLogin}>
 				<div>
 					username:
 					<input
+						id="username"
 						type="text"
 						value={username}
 						name="Username"
@@ -40,13 +43,16 @@ const Login = ({ setUser, setErrorMessage }) => {
 				<div>
 					password:
 					<input
+						id="password"
 						type="password"
 						value={password}
 						name="Password"
 						onChange={({ target }) => setPassword(target.value)}
 					/>
 				</div>
-				<button type="submit">login</button>
+				<button id="login-button" type="submit">
+					login
+				</button>
 			</form>
 		</div>
 	);

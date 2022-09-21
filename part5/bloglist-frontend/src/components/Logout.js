@@ -46,7 +46,7 @@ const Logout = ({
 				</Togglable>
 			</div>
 			{blogs
-				.sort((a, b) => a.likes - b.likes)
+				.sort((a, b) => b.likes - a.likes)
 				.map((blog) => (
 					<Blog
 						key={blog.id}
@@ -54,6 +54,7 @@ const Logout = ({
 						setBlogs={setBlogs}
 						blog={blog}
 						user={user}
+						setSuccessMessage={setSuccessMessage}
 					/>
 				))}
 		</div>

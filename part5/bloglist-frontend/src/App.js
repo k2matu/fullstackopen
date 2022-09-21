@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import LoginForm from "./components/LoginForm";
 import Logout from "./components/Logout";
-import { Success, Fail } from "./components/Message";
+import { Success } from "./components/Message";
 import blogService from "./services/blogs";
 
 const App = () => {
@@ -24,13 +24,18 @@ const App = () => {
 	}, []);
 
 	if (user === null) {
-		return <LoginForm setUser={setUser} setErrorMessage={setErrorMessage} />;
+		return (
+			<LoginForm
+				setUser={setUser}
+				errorMessage={errorMessage}
+				setErrorMessage={setErrorMessage}
+			/>
+		);
 	}
 
 	return (
 		<div>
 			<Success successMessage={successMessage} />
-			<Fail failMessage={errorMessage} />
 			<Logout
 				blogs={blogs}
 				setBlogs={setBlogs}

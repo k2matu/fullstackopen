@@ -4,9 +4,9 @@ const Success = ({ successMessage }) => {
 	}
 };
 
-const Fail = ({ failMessage }) => {
-	if (failMessage) {
-		return <div className="fail">{failMessage}</div>;
+const Fail = ({ errorMessage }) => {
+	if (errorMessage) {
+		return <div className="fail">{errorMessage}</div>;
 	}
 };
 
