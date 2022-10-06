@@ -1,32 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import personService from "./services/persons";
 import Person from "./components/Person";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 
 const App = () => {
-	const [persons, setPersons] = useState([
-		{ name: "Arto Hellas", number: "040-123456", id: 1 },
-		{ name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
-		{ name: "Dan Abramov", number: "12-43-234345", id: 3 },
-		{ name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-	]);
+	const [persons, setPersons] = useState([]);
 	const [newName, setNewName] = useState("");
 	const [newNumber, setNewNumber] = useState("");
 	const [filteredNames, setFilteredNames] = useState("");
+	const [update, setUpdate] = useState(false);
+
+	useEffect(() => {
+		personService.getAll().then((response) => {
+			setPersons(response.data);
+		});
+		setUpdate(false);
+	}, [update]);
 
 	const addPerson = (e) => {
 		e.preventDefault();
 
 		if (persons.some((e) => e.name === newName)) {
-			window.alert(`${newName} is already in the phonebook`);
+			if (window.confirm(`${newName} is already in the phonebook`)) {
+				const foundPerson = persons.find((n) => n.name === newName);
+				const changedPerson = { ...foundPerson, number: newNumber };
+
+				personService.update(foundPerson.id, changedPerson).then((response) => {
+					setPersons(
+						persons.map((person) =>
+							person.name !== e.name ? person : response
+						)
+					);
+					setUpdate(true);
+					setNewNumber("");
+					setNewName("");
+				});
+			}
 		} else {
 			const personObject = {
 				name: newName,
 				number: newNumber,
 				id: persons.length + 1,
 			};
-
-			setPersons(persons.concat(personObject));
+			personService.create(personObject).then((response) => {
+				setPersons(persons.concat(response.data));
+			});
 			setNewName("");
 			setNewNumber("");
 		}
@@ -35,6 +54,14 @@ const App = () => {
 	const personsToShow = persons.filter((person) =>
 		person.name.toLowerCase().includes(filteredNames.toLowerCase())
 	);
+
+	const removePerson = (e) => {
+		const found = persons.find((person) => person.name === e);
+		if (window.confirm(`Delete ${e}?`)) {
+			personService.remove(found.id);
+			setPersons(persons.filter((person) => person.name !== e));
+		}
+	};
 
 	return (
 		<div>
@@ -51,7 +78,11 @@ const App = () => {
 			<h3>Numbers</h3>
 			<div>
 				{personsToShow.map((person) => (
-					<Person key={person.name} person={person} />
+					<Person
+						key={person.name}
+						person={person}
+						removePerson={removePerson}
+					/>
 				))}
 			</div>
 		</div>
